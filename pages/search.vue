@@ -4,9 +4,7 @@
     <ContentTitle title="検索" />
     <div>
       <!-- 検索フォーム -->
-      <label
-        class="flex border rounded shadow mb-10 p-1 md:p-2 max-w-2xl mx-auto"
-      >
+      <label class="flex border rounded shadow mb-10 p-1 md:p-2 max-w-2xl mx-auto">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24px"
@@ -36,9 +34,7 @@
     <div>
       <div class="mb-10">
         <!-- 年度を選択するタブ -->
-        <ul
-          class="hidden md:grid grid-cols-6 gap-x-1 gap-y-2 bg-sky-600 p-2 rounded shadow-md"
-        >
+        <ul class="hidden md:grid grid-cols-6 gap-x-1 gap-y-2 bg-sky-600 p-2 rounded shadow-md">
           <template v-for="t in times">
             <template v-for="m in ['AM', 'PM']">
               <li :key="`${t}${m}`" class="text-center">
@@ -53,24 +49,13 @@
                   :for="`${t - 1953}${m}`"
                   class="py-1 md:py-2 rounded peer-checked:bg-white text-white peer-checked:text-black block peer-checked:shadow cursor-pointer"
                 >
-                  {{
-                    `${t - 1953}${m}`.replace(
-                      /([0-9]{2})([A-Z]{2})/,
-                      convertTime
-                    )
-                  }}
+                  {{ `${t - 1953}${m}`.replace(/([0-9]{2})([A-Z]{2})/, convertTime) }}
                 </label>
               </li>
             </template>
           </template>
           <li class="text-center">
-            <input
-              id="all"
-              type="radio"
-              value="All"
-              v-model="isShowTab"
-              class="hidden peer"
-            />
+            <input id="all" type="radio" value="All" v-model="isShowTab" class="hidden peer" />
             <label
               for="all"
               class="py-1 md:py-2 rounded peer-checked:bg-white text-white peer-checked:text-black block peer-checked:shadow cursor-pointer"
@@ -99,21 +84,13 @@
           <template v-if="this.isShowTab === 'All'">
             <template v-for="dataElement in resultData">
               <template v-for="d in dataElement.result">
-                <li
-                  class="border-x border-t last:border-b p-2"
-                  :key="`${dataElement.time}${d.num}`"
-                >
+                <li class="border-x border-t last:border-b p-2" :key="`${dataElement.time}${d.num}`">
                   <Accordion>
                     <template v-slot:accordion-title>
                       <!-- 問題文 -->
                       <div>
                         <span class="sm:text-xl">
-                          {{
-                            dataElement.time.replace(
-                              /([0-9]{2})([A-Z]{2})/,
-                              convertTime
-                            )
-                          }}
+                          {{ dataElement.time.replace(/([0-9]{2})([A-Z]{2})/, convertTime) }}
                           問題 {{ d.num }}
                         </span>
                         <br />
@@ -141,15 +118,12 @@
                           v-if="
                             isShowTab === 'All' &&
                             d.img !== false &&
-                            dataElement.time ===
-                              d.img.match(/[0-9]{2}[A-Z]{2}/)[0]
+                            dataElement.time === d.img.match(/[0-9]{2}[A-Z]{2}/)[0]
                           "
                           class="max-w-lg mx-auto"
                         >
                           <img
-                            :src="
-                              require(`~/assets/images/${dataElement.time}/${d.img}.jpg`)
-                            "
+                            :src="require(`~/assets/images/${dataElement.time}/${d.img}.jpg`)"
                             alt="問題についての画像"
                           />
                         </div>
@@ -163,10 +137,7 @@
           <!-- isShowTabが変わってからresultDataを取得するまで時間がかかるのでresultDataをチェックする -->
           <template v-else-if="resultData[0] && resultData[0].num">
             <template v-for="d in resultData">
-              <li
-                class="border-x border-t last:border-b p-2"
-                :key="`${isShowTab}-${d.num}`"
-              >
+              <li class="border-x border-t last:border-b p-2" :key="`${isShowTab}-${d.num}`">
                 <Accordion>
                   <template v-slot:accordion-title>
                     <!-- 問題文 -->
@@ -194,19 +165,10 @@
                       <!-- 問題に関する画像 -->
                       <!-- isShowTabが変更されてからresultDataを取得するまでに時間差があるため、isShowTabとresultDataの年度が一致しているかもチェック -->
                       <div
-                        v-if="
-                          isShowTab !== 'All' &&
-                          d.img &&
-                          isShowTab === d.img.match(/[0-9]{2}[A-Z]{2}/)[0]
-                        "
+                        v-if="isShowTab !== 'All' && d.img && isShowTab === d.img.match(/[0-9]{2}[A-Z]{2}/)[0]"
                         class="max-w-lg mx-auto"
                       >
-                        <img
-                          :src="
-                            require(`~/assets/images/${isShowTab}/${d.img}.jpg`)
-                          "
-                          alt="問題についての画像"
-                        />
+                        <img :src="require(`~/assets/images/${isShowTab}/${d.img}.jpg`)" alt="問題についての画像" />
                       </div>
                     </div>
                   </template>
@@ -225,101 +187,101 @@ export default {
   data() {
     return {
       times: [2020, 2019, 2018, 2017, 2016, 2015],
-      searchWord: "",
-      isShowTab: "",
+      searchWord: '',
+      isShowTab: '',
       jsonData: {},
       resultData: [],
-    };
+    }
   },
   async mounted() {
     // isShowTabの初期値を設定
-    this.isShowTab = "All";
+    this.isShowTab = 'All'
     // 問題のJSONデータを取得
-    const res = await fetch(`/json-data/rinsyo${this.isShowTab}.json`);
-    this.jsonData = await res.json();
+    const res = await fetch(`/json-data/rinsyo${this.isShowTab}.json`)
+    this.jsonData = await res.json()
   },
   methods: {
     // 検索結果を取得
     getResult() {
-      if (this.isShowTab === "All") {
-        const AllResults = [];
+      if (this.isShowTab === 'All') {
+        const AllResults = []
         this.jsonData.forEach((d) => {
           // 問題を取得
-          const questionAry = d.questionData;
+          const questionAry = d.questionData
           // 検索ワードが含まれている問題番号を保存する配列
-          const result = [];
+          const result = []
           questionAry.forEach((q, index) => {
             // 検索ワードがあるか確認
             if (q.question.includes(this.searchWord)) {
               // 問題文に含まれているか
               // 問題のデータを取得
-              const questionData = q;
-              questionData.answer = d.answerData[index];
-              result.push(questionData);
+              const questionData = q
+              questionData.answer = d.answerData[index]
+              result.push(questionData)
             } else {
               for (let o of q.options) {
                 if (o.includes(this.searchWord)) {
                   // 選択肢に含まれているか
                   // 問題のデータを取得
-                  const questionData = q;
-                  questionData.answer = d.answerData[index];
-                  result.push(questionData);
-                  break;
+                  const questionData = q
+                  questionData.answer = d.answerData[index]
+                  result.push(questionData)
+                  break
                 }
               }
             }
-          });
+          })
           // 検索結果があったとき
           if (result.length > 0) {
-            AllResults.push({ time: d.time, result: result });
+            AllResults.push({ time: d.time, result: result })
           }
-        });
-        return AllResults;
+        })
+        return AllResults
       } else {
         // 問題を取得
-        const questionAry = this.jsonData.questionData;
+        const questionAry = this.jsonData.questionData
         // 検索ワードが含まれている問題番号を保存する配列
-        const result = [];
+        const result = []
         questionAry.forEach((q, index) => {
           // 検索ワードがあるか確認
           if (q.question.includes(this.searchWord)) {
             // 問題文に含まれているか
             // 問題のデータを取得
-            const questionData = q;
-            questionData.answer = this.jsonData.answerData[index];
-            result.push(questionData);
+            const questionData = q
+            questionData.answer = this.jsonData.answerData[index]
+            result.push(questionData)
           } else {
             for (let o of q.options) {
               if (o.includes(this.searchWord)) {
                 // 選択肢に含まれているか
                 // 問題のデータを取得
-                const questionData = q;
-                questionData.answer = this.jsonData.answerData[index];
-                result.push(questionData);
-                break;
+                const questionData = q
+                questionData.answer = this.jsonData.answerData[index]
+                result.push(questionData)
+                break
               }
             }
           }
-        });
-        return result;
+        })
+        return result
       }
     },
     convertTime(match, p1, p2) {
-      return `第${p1}回 ${p2 === "AM" ? "午前" : "午後"}`;
+      return `第${p1}回 ${p2 === 'AM' ? '午前' : '午後'}`
     },
   },
   watch: {
     async isShowTab(newTab, oldTab) {
       // 問題のJSONデータを取得
-      const res = await fetch(`/json-data/rinsyo${this.isShowTab}.json`);
-      this.jsonData = await res.json();
+      const res = await fetch(`/json-data/rinsyo${this.isShowTab}.json`)
+      this.jsonData = await res.json()
       // 検索結果を代入、検索ワードがないときは検索結果をリセット
-      this.resultData = this.searchWord !== "" ? this.getResult() : [];
+      this.resultData = this.searchWord !== '' ? this.getResult() : []
     },
     searchWord(newWord, oldWord) {
       // 検索結果を代入、検索ワードがないときは検索結果をリセット
-      this.resultData = newWord !== "" ? this.getResult() : [];
+      this.resultData = newWord !== '' ? this.getResult() : []
     },
   },
-};
+}
 </script>
