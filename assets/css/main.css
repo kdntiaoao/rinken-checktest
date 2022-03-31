@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+    touch-action: manipulation;
+  }
+  body {
+    @apply overflow-y-scroll text-sm xs:text-base;
+  }
+  img {
+    @apply pointer-events-none select-none;
+  }
+}
+
+@layer components {
+  .wrapper {
+    @apply max-w-[1000px] mx-auto px-[3%];
+  }
+  .btn-primary {
+    @apply bg-sky-600 active:bg-sky-500 text-white rounded-full shadow select-none;
+  }
+  .btn-secondary {
+    @apply bg-sky-800 active:bg-sky-700 text-white rounded-full shadow select-none;
+  }
+  .list-btn {
+    @apply border border-slate-400 rounded p-2 md:p-3 cursor-pointer select-none active:bg-sky-200 shadow;
+  }
+}
