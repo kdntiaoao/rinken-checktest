@@ -3,7 +3,6 @@
     <div class="relative">
       <!-- 解答画面 -->
       <div v-if="questionNum <= Number(questionNums.split('-')[1])">
-        <transition name="fade">
           <div :key="questionNum" :hidden="questionNum === 0">
             <!-- 問題文 -->
             <p class="mb-5">
@@ -55,7 +54,6 @@
               <img :src="require(`~/assets/images/${time}/${imgName}`)" alt="問題についての画像" />
             </div>
           </div>
-        </transition>
       </div>
 
       <!-- 正答率画面 -->
@@ -200,19 +198,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s;
-}
-.fade-enter {
-  opacity: 0;
-}
-.fade-leave-to {
-  transform: translateX(-10%);
-  position: absolute;
-  width: 100%;
-  opacity: 0;
-}
-</style>
