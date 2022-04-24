@@ -3,52 +3,54 @@
     <div class="relative">
       <!-- 解答画面 -->
       <div v-if="questionNum <= Number(questionNums.split('-')[1])">
-        <div :key="questionNum" :hidden="questionNum === 0">
-          <!-- 問題文 -->
-          <p class="mb-5">
-            <span class="text-base xs:text-xl">問題 {{ questionNum }}</span>
-            <br />
-            {{ question }}
-          </p>
-          <div class="relative mb-8">
-            <!-- 「マル」か「バツ」を表示 -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 opacity-40" v-show="!thinking">
-              <!-- マルマーク -->
-              <div v-show="isCorrect">
-                <img src="~/assets/images/correct_red.svg" alt="マルマーク" class="w-full" />
+        <transition name="fade">
+          <div :key="questionNum" :hidden="questionNum === 0">
+            <!-- 問題文 -->
+            <p class="mb-5">
+              <span class="text-base xs:text-xl">問題 {{ questionNum }}</span>
+              <br />
+              {{ question }}
+            </p>
+            <div class="relative mb-8">
+              <!-- 「マル」か「バツ」を表示 -->
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 opacity-40" v-show="!thinking">
+                <!-- マルマーク -->
+                <div v-show="isCorrect">
+                  <img src="~/assets/images/correct_red.svg" alt="マルマーク" class="w-full" />
+                </div>
+                <!-- バツマーク -->
+                <div v-show="!isCorrect">
+                  <img src="~/assets/images/incorrect_blue.svg" alt="バツマーク" class="w-full" />
+                </div>
               </div>
-              <!-- バツマーク -->
-              <div v-show="!isCorrect">
-                <img src="~/assets/images/incorrect_blue.svg" alt="バツマーク" class="w-full" />
-              </div>
+              <!-- 選択肢 -->
+              <ul class="grid grid-cols-1 gap-3" :class="{ 'pointer-events-none': !thinking }">
+                <li
+                  v-for="(option, index) in options"
+                  :key="index"
+                  class="list-btn transition"
+                  :class="[
+                    {
+                      'bg-sky-200': selectedOptions.includes(index),
+                      'text-red-400': answer.includes(index + 1) && !thinking,
+                    },
+                  ]"
+                  :style="'order:' + randomNumAry[index]"
+                  @click="selectedOption(index, $event)"
+                >
+                  {{ option }}
+                </li>
+              </ul>
             </div>
-            <!-- 選択肢 -->
-            <ul class="grid grid-cols-1 gap-3" :class="{ 'pointer-events-none': !thinking }">
-              <li
-                v-for="(option, index) in options"
-                :key="index"
-                class="list-btn transition"
-                :class="[
-                  {
-                    'bg-sky-200': selectedOptions.includes(index),
-                    'text-red-400': answer.includes(index + 1) && !thinking,
-                  },
-                ]"
-                :style="'order:' + randomNumAry[index]"
-                @click="selectedOption(index, $event)"
-              >
-                {{ option }}
-              </li>
-            </ul>
+            <div class="mb-8">
+              <button class="btn-primary w-full p-2 md:p-3" v-show="thinking" @click="checkAnswer">解答</button>
+              <button class="btn-secondary w-full p-2 md:p-3" v-show="!thinking" @click="questionNum++">次の問題</button>
+            </div>
+            <div v-if="imgName !== ''" class="max-w-lg mx-auto">
+              <img :src="require(`~/assets/images/${time}/${imgName}`)" alt="問題についての画像" />
+            </div>
           </div>
-          <div class="mb-8">
-            <button class="btn-primary w-full p-2 md:p-3" v-show="thinking" @click="checkAnswer">解答</button>
-            <button class="btn-secondary w-full p-2 md:p-3" v-show="!thinking" @click="questionNum++">次の問題</button>
-          </div>
-          <div v-if="imgName !== ''" class="max-w-lg mx-auto">
-            <img :src="require(`~/assets/images/${time}/${imgName}`)" alt="問題についての画像" />
-          </div>
-        </div>
+        </transition>
       </div>
 
       <!-- 正答率画面 -->
@@ -193,3 +195,19 @@ export default {
   },
 }
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease-in;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-leave-to {
+  /* transform: translateX(-10%); */
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+}
+</style>
