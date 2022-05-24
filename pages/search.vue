@@ -33,41 +33,10 @@
 
     <div>
       <div class="mb-10">
-        <!-- 年度を選択するタブ -->
-        <ul class="hidden md:grid grid-cols-6 gap-x-1 gap-y-2 bg-sky-600 p-2 rounded shadow-md">
-          <template v-for="t in times">
-            <template v-for="m in ['AM', 'PM']">
-              <li :key="`${t}${m}`" class="text-center">
-                <input
-                  :id="`${t - 1953}${m}`"
-                  type="radio"
-                  :value="`${t - 1953}${m}`"
-                  v-model="isShowTab"
-                  class="hidden peer"
-                />
-                <label
-                  :for="`${t - 1953}${m}`"
-                  class="py-1 md:py-2 rounded peer-checked:bg-white text-white peer-checked:text-black block peer-checked:shadow cursor-pointer"
-                >
-                  {{ `${t - 1953}${m}`.replace(/([0-9]{2})([A-Z]{2})/, convertTime) }}
-                </label>
-              </li>
-            </template>
-          </template>
-          <li class="text-center">
-            <input id="all" type="radio" value="All" v-model="isShowTab" class="hidden peer" />
-            <label
-              for="all"
-              class="py-1 md:py-2 rounded peer-checked:bg-white text-white peer-checked:text-black block peer-checked:shadow cursor-pointer"
-            >
-              全年度
-            </label>
-          </li>
-        </ul>
         <!-- 年度を選択するポップアップメニュー -->
-        <label class="md:hidden">
+        <label class="cursor-pointer">
           年度選択：
-          <select v-model="isShowTab">
+          <select v-model="isShowTab" class="border rounded p-1">
             <option value="All">全年度</option>
             <optgroup v-for="t in times" :key="t" :label="`${t}年度`">
               <option :value="`${t - 1953}AM`">第{{ t - 1953 }}回 午前</option>
@@ -211,21 +180,21 @@ export default {
           // 検索ワードが含まれている問題番号を保存する配列
           const result = []
           questionAry.forEach((q, index) => {
+            const questionToLower = q.question.toLowerCase();
             // 検索ワードがあるか確認
-            if (q.question.includes(this.searchWord)) {
-              // 問題文に含まれているか
+            // 問題文に含まれているか
+            if (questionToLower.includes(this.searchWord.toLowerCase())) {
               // 問題のデータを取得
-              const questionData = q
-              questionData.answer = d.answerData[index]
-              result.push(questionData)
+              q.answer = d.answerData[index]
+              result.push(q)
             } else {
               for (let o of q.options) {
-                if (o.includes(this.searchWord)) {
-                  // 選択肢に含まれているか
+                const optionToLower = o.toLowerCase()
+                // 選択肢に含まれているか
+                if (optionToLower.includes(this.searchWord.toLowerCase())) {
                   // 問題のデータを取得
-                  const questionData = q
-                  questionData.answer = d.answerData[index]
-                  result.push(questionData)
+                  q.answer = d.answerData[index]
+                  result.push(q)
                   break
                 }
               }
