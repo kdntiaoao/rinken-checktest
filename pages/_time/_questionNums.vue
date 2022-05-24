@@ -199,13 +199,18 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.3s ease-in;
+  transition: opacity 0.3s ease-out, transform 0.8s ease-out;
+}
+.fade-enter-active {
+  transition: opacity 0.3s ease-out, transform 0.8s ease-out;
+  transition-delay: 0.3s;
 }
 .fade-enter {
   opacity: 0;
+  transform: translateX(200px);
 }
 .fade-leave-to {
-  /* transform: translateX(-10%); */
+  transform: translateX(-200px);
   position: absolute;
   width: 100%;
   opacity: 0;
