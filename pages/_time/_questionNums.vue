@@ -45,14 +45,14 @@
                 </li>
               </ul>
             </div>
-            <div class="mb-8">
+            <div v-if="imgName !== ''" class="max-w-lg mx-auto mb-8">
+              <img :src="require(`~/assets/images/${time}/${imgName}`)" alt="問題についての画像" />
+            </div>
+            <div>
               <button class="btn-primary w-full p-2 md:p-3" v-show="thinking" @click="checkAnswer">解答</button>
               <button class="btn-secondary w-full p-2 md:p-3" v-show="!thinking" @click="questionNum++">
                 次の問題
               </button>
-            </div>
-            <div v-if="imgName !== ''" class="max-w-lg mx-auto">
-              <img :src="require(`~/assets/images/${time}/${imgName}`)" alt="問題についての画像" />
             </div>
           </div>
         </transition>

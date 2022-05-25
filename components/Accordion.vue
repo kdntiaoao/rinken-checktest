@@ -16,7 +16,7 @@
           width="20px"
           height="20px"
           viewBox="0 0 20 20"
-          class="w-4 h-4 md:w-6 md:h-6 mx-auto transition delay-300 duration-300 rotate-90 text-slate-400"
+          class="w-4 h-4 mx-auto transition delay-300 duration-300 rotate-90 text-slate-400"
         >
           <path fill="none" d="M0 0h20v20H0z" />
           <g

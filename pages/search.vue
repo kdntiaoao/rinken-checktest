@@ -32,7 +32,7 @@
     </div>
 
     <div>
-      <div class="mb-10 text-right">
+      <div class="mb-4 text-right">
         <!-- 年度を選択するポップアップメニュー -->
         <label class="cursor-pointer">
           年度選択：
@@ -112,8 +112,7 @@
                     <!-- 問題文 -->
                     <div>
                       <span class="text-sm">問題 {{ d.num }}</span>
-                      <br />
-                      {{ d.question }}
+                      <p>{{ d.question }}</p>
                     </div>
                   </template>
                   <template v-slot:accordion-content>

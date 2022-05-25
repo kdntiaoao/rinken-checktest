@@ -1,5 +1,5 @@
 <template>
-  <nav class="my-1 md:my-2 text-xs xs:text-sm md:text-base" :class="{ 'opacity-0 pointer-events-none': navAry.length === 0 }">
+  <nav class="my-1 md:my-2" :class="{ 'opacity-0 pointer-events-none': navAry.length === 0 }">
     <div class="wrapper">
       <ol class="flex items-center text-slate-500">
         <li

@@ -6,7 +6,7 @@
 
     <BreadcrumbNav :navAry="navAry" :navNameAry="navNameAry" />
 
-    <main class="my-5 md:my-10">
+    <main class="my-5">
       <Nuxt />
     </main>
 
