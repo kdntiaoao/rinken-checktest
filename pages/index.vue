@@ -2,7 +2,7 @@
   <!-- 解く問題の年度を選択する画面 -->
   <div class="wrapper">
     <ContentTitle title="国家試験問題" />
-    <ul class="grid sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
+    <ul class="grid sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-8">
       <li v-for="t in times" :key="t">
         <h3 class="mb-2 sm:pb-2 text-slate-400">{{ t }}年度</h3>
         <ul class="grid grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-4">
