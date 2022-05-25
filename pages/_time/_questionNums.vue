@@ -7,13 +7,16 @@
           <div :key="questionNum" :hidden="questionNum === 0">
             <!-- 問題文 -->
             <p class="mb-5">
-              <span class="text-base xs:text-xl">問題 {{ questionNum }}</span>
+              <span class="text-sm">問題 {{ questionNum }}</span>
               <br />
               {{ question }}
             </p>
             <div class="relative mb-8">
               <!-- 「マル」か「バツ」を表示 -->
-              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 opacity-40" v-show="!thinking">
+              <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 opacity-40"
+                v-show="!thinking"
+              >
                 <!-- マルマーク -->
                 <div v-show="isCorrect">
                   <img src="~/assets/images/correct_red.svg" alt="マルマーク" class="w-full" />
@@ -44,7 +47,9 @@
             </div>
             <div class="mb-8">
               <button class="btn-primary w-full p-2 md:p-3" v-show="thinking" @click="checkAnswer">解答</button>
-              <button class="btn-secondary w-full p-2 md:p-3" v-show="!thinking" @click="questionNum++">次の問題</button>
+              <button class="btn-secondary w-full p-2 md:p-3" v-show="!thinking" @click="questionNum++">
+                次の問題
+              </button>
             </div>
             <div v-if="imgName !== ''" class="max-w-lg mx-auto">
               <img :src="require(`~/assets/images/${time}/${imgName}`)" alt="問題についての画像" />

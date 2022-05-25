@@ -27,7 +27,7 @@
             <template v-slot:accordion-title>
               <!-- 問題文 -->
               <div>
-                <span class="sm:text-xl">
+                <span class="text-sm">
                   {{ d.time.replace(/([0-9]{2})([A-Z]{2})/, convertTime) }} 問題
                   {{ d.questionNum }}
                 </span>

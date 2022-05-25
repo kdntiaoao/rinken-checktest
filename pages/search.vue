@@ -32,7 +32,7 @@
     </div>
 
     <div>
-      <div class="mb-10">
+      <div class="mb-10 text-right">
         <!-- 年度を選択するポップアップメニュー -->
         <label class="cursor-pointer">
           年度選択：
@@ -48,7 +48,7 @@
       <!-- 検索結果がなかったときのメッセージ -->
       <p v-show="searchWord && resultData.length === 0">検索結果は0件です。</p>
       <!-- 検索結果 -->
-      <div class="p-2 rounded border shadow" v-show="resultData.length !== 0">
+      <div class="p-2 rounded shadow" v-show="resultData.length !== 0">
         <ul>
           <template v-if="this.isShowTab === 'All'">
             <template v-for="dataElement in resultData">
@@ -58,7 +58,7 @@
                     <template v-slot:accordion-title>
                       <!-- 問題文 -->
                       <div>
-                        <span class="sm:text-xl">
+                        <span class="text-sm">
                           {{ dataElement.time.replace(/([0-9]{2})([A-Z]{2})/, convertTime) }}
                           問題 {{ d.num }}
                         </span>
@@ -111,7 +111,7 @@
                   <template v-slot:accordion-title>
                     <!-- 問題文 -->
                     <div>
-                      <span class="sm:text-xl">問題 {{ d.num }}</span>
+                      <span class="text-sm">問題 {{ d.num }}</span>
                       <br />
                       {{ d.question }}
                     </div>
@@ -180,7 +180,7 @@ export default {
           // 検索ワードが含まれている問題番号を保存する配列
           const result = []
           questionAry.forEach((q, index) => {
-            const questionToLower = q.question.toLowerCase();
+            const questionToLower = q.question.toLowerCase()
             // 検索ワードがあるか確認
             // 問題文に含まれているか
             if (questionToLower.includes(this.searchWord.toLowerCase())) {
@@ -212,17 +212,19 @@ export default {
         // 検索ワードが含まれている問題番号を保存する配列
         const result = []
         questionAry.forEach((q, index) => {
+          const questionToLower = q.question.toLowerCase()
           // 検索ワードがあるか確認
-          if (q.question.includes(this.searchWord)) {
-            // 問題文に含まれているか
+          // 問題文に含まれているか
+          if (questionToLower.includes(this.searchWord.toLowerCase())) {
             // 問題のデータを取得
             const questionData = q
             questionData.answer = this.jsonData.answerData[index]
             result.push(questionData)
           } else {
             for (let o of q.options) {
-              if (o.includes(this.searchWord)) {
-                // 選択肢に含まれているか
+              const optionToLower = o.toLowerCase()
+              // 選択肢に含まれているか
+              if (optionToLower.includes(this.searchWord.toLowerCase())) {
                 // 問題のデータを取得
                 const questionData = q
                 questionData.answer = this.jsonData.answerData[index]
@@ -242,8 +244,9 @@ export default {
   watch: {
     async isShowTab(newTab, oldTab) {
       // 問題のJSONデータを取得
-      const res = await fetch(`/json-data/rinsyo${this.isShowTab}.json`)
+      const res = await fetch(`/json-data/rinsyo${newTab}.json`)
       this.jsonData = await res.json()
+      console.log('changeTab:', this.jsonData)
       // 検索結果を代入、検索ワードがないときは検索結果をリセット
       this.resultData = this.searchWord !== '' ? this.getResult() : []
     },

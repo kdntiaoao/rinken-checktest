@@ -2,17 +2,13 @@
   <!-- 解く問題の年度を選択する画面 -->
   <div class="wrapper">
     <ContentTitle title="国家試験問題" />
-    <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 sm:gap-y-16">
+    <ul class="grid sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
       <li v-for="t in times" :key="t">
-        <h3 class="sm:mb-4 sm:pb-2 sm:border-b border-slate-400 text-slate-400">{{ t }}年度</h3>
-        <ul class="grid sm:grid-cols-2 gap-x-2 border-l border-b sm:border-0 border-slate-400 xs:pl-5 sm:pl-0">
-          <li
-            v-for="m in ['AM', 'PM']"
-            :key="`${t - 1953}${m}`"
-            class="border-b border-slate-400 sm:border-0 last:border-0 sm:mr-auto"
-          >
+        <h3 class="mb-2 sm:pb-2 text-slate-400">{{ t }}年度</h3>
+        <ul class="grid grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-4">
+          <li v-for="m in ['AM', 'PM']" :key="`${t - 1953}${m}`">
             <NuxtLink :to="`/${t - 1953}${m}`">
-              <div class="flex items-center justify-between sm:justify-start px-2 py-1 sm:p-0 cursor-pointer">
+              <div class="flex items-center justify-between list-btn">
                 <div>第{{ t - 1953 }}回{{ m === 'AM' ? '午前' : '午後' }}</div>
                 <div class="border rounded-full border-black ml-1 p-[2px]">
                   <!-- 矢印アイコン -->
